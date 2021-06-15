@@ -1,0 +1,52 @@
+package com.example.test;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
+public class LuanvanAdapter extends BaseAdapter {
+    private Context context;
+    private ArrayList<ViewInterface> data;
+
+    public LuanvanAdapter(Context context, ArrayList<ViewInterface> data) {
+        this.context = context;
+        this.data = data;
+    }
+
+    @Override
+    public int getCount() {
+        return data.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return data.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if(convertView==null){
+            convertView = LayoutInflater.from(context).inflate(R.layout.layout_data_view,parent,false);
+        }
+        ViewInterface  currentdata = data(position);
+        TextView textLV_Ma = (TextView) convertView.findViewById(R.id.Lv_Ma);
+        TextView textLV_Ten = (TextView) convertView.findViewById(R.id.LV_Ten);
+        TextView textGV1_Ten= (TextView) convertView.findViewById(R.id.GV1_Ten);
+        TextView textGV2_Ten= (TextView) convertView.findViewById(R.id.GV2_Ten);
+        textLV_Ma.setText(currentdata.getLV_Ma());
+        textLV_Ten.setText(currentdata.getLV_Ten());
+        textGV1_Ten.setText(currentdata.getGV1_Ten());
+        textGV2_Ten.setText(currentdata.getGV2_Ten());
+        return convertView;
+    }
+}

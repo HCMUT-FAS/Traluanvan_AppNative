@@ -1,0 +1,19 @@
+  @Override
+    public void onCreate( SQLiteDatabase database) {
+         String CreateTable = "CREATE TABLE "+  TABLE_NAME +"("+ PRIMARY_KEY + " INTEGER PRIMARY KEY, "+ COL_2 +" char , " + COL_3 + " VARCHAR(1000) ," +
+                 COL_4+ "VARCHAR(50) , " +
+                 COL_5 + "VARCHAR(10), " +
+                 COL_6 + "VARCHAR(50) CHARACTER , " +
+                 COL_7 + "VARCHAR(10), " +
+                 COL_8 + "VARCHAR(50) CHARACTER , " +
+                 COL_9 + "VARCHAR(50) CHARACTER " +
+                  ");";
+        database.execSQL(CreateTable);
+    }
+
+    @Override
+    public void onUpgrade( SQLiteDatabase database, int oldVersion, int newVersion) {
+
+        database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(database);
+    }

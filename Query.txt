@@ -1,0 +1,27 @@
+ public List<ViewInterface> getAllData() {
+        List<ViewInterface> result = new ArrayList<ViewInterface>();
+        String query = "SELECT * FROM luanvan";
+        Cursor cursor = database.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                int LV_Ma = cursor.getInt(0);
+                String LV_Ten = cursor.getString(1);
+                String LV_TenTiengAnh = cursor.getString(2);
+                String SV1_Ten = cursor.getString(3);
+                String MSSV1 = cursor.getString(4);
+                String SV2_Ten = cursor.getString(5);
+                String MSSV2 = cursor.getString(6);
+                String GV1_Ten = cursor.getString(7);
+                String GV2_Ten = cursor.getString(8);
+                ViewInterface newview = new ViewInterface(LV_Ma, LV_Ten, LV_TenTiengAnh, SV1_Ten, MSSV1, SV2_Ten, MSSV2, GV1_Ten, GV2_Ten);
+                result.add(newview);
+            } while (cursor.moveToNext());
+
+        } else {
+            //do not do anything
+        }
+        cursor.close();
+        database.close();
+        return result;
+
+    }
