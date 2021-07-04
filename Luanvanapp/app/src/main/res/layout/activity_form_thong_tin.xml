@@ -1,9 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Form_thong_tin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Form_thong_tin">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="375dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:lineSpacingExtra="8sp"
+        android:text="Điền thông tin"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/title_email"
+        android:layout_width="102dp"
+        android:layout_height="28dp"
+        android:text="Email"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="393dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="textPersonName"  />
+
+    <TextView
+        android:id="@+id/title_Ten"
+        android:layout_width="102dp"
+        android:layout_height="28dp"
+        android:text="Tên sinh viên"
+        android:textColor="@color/black" />
+
+    <EditText
+        android:id="@+id/tsv"
+        android:layout_width="393dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/title_msv"
+        android:layout_width="284dp"
+        android:layout_height="38dp"
+        android:text="Mã số sinh viên"
+        android:textColor="@color/black" />
+
+    <EditText
+        android:id="@+id/msv"
+        android:layout_width="396dp"
+        android:layout_height="44dp"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/title_mlv"
+        android:layout_width="102dp"
+        android:layout_height="28dp"
+        android:text="Mã luận văn"
+        android:textColor="@color/black" />
+
+    <EditText
+        android:id="@+id/mlv"
+        android:layout_width="395dp"
+        android:layout_height="46dp"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/title_sdt"
+        android:layout_width="102dp"
+        android:layout_height="28dp"
+        android:text="Số điện thoại"
+        android:textColor="@color/black" />
+
+    <EditText
+        android:id="@+id/sdt"
+        android:layout_width="395dp"
+        android:layout_height="41dp"
+        android:ems="10"
+        android:inputType="number|textPersonName" />
+
+    <TextView
+        android:id="@+id/title_date"
+        android:layout_width="209dp"
+        android:layout_height="33dp"
+        android:text="Ngày mượn luận văn"
+        android:textColor="@color/black" />
+
+    <DatePicker
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_senddata"
+            android:layout_width="108dp"
+            android:layout_height="58dp"
+            android:autoText="false"
+            android:background="@color/white"
+            android:checkable="false"
+            android:text="Mượn"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            app:backgroundTint="@color/white" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/sign_out_button"
+            android:layout_width="108dp"
+            android:layout_height="58dp"
+            android:autoText="false"
+            android:background="@color/white"
+            android:checkable="false"
+            android:text="Sign out"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            app:backgroundTint="@color/white" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
