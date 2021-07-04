@@ -1,0 +1,4 @@
+#Thu Jun 17 14:39:24 ICT 2021
+base.0=D\:\\Project\\App\\Luanvanapp\\app\\build\\intermediates\\dex\\release\\mergeDexRelease\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
