@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView Soluong,title;
     private ListView Listview;
     ArrayAdapter<String> sd;
+    Traluanvandb data = new Traluanvandb(this);
+    ConnectServer connectServer = new ConnectServer();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,20 +60,18 @@ public class MainActivity extends AppCompatActivity {
 
         //Start app
         Toast.makeText(this, "Chúc một ngày tốt lành", Toast.LENGTH_SHORT).show();
-        Traluanvandb data;
-        data = new Traluanvandb(this);
-        //check database
+
+        //Check database if exist (Option)
         File database = getApplicationContext().getDatabasePath(data.DB_NAME);
         if (false == database.exists()) {
             data.getReadableDatabase();
             //Copy database
-            if (copyDataBase(this)) {
+            if (data.copyDataBase(this)) {
                 Toast.makeText(MainActivity.this, "Copy Success", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(MainActivity.this, "Try again", Toast.LENGTH_SHORT).show();
             }
         }
-
         //Show Data from database
         //Get All data
         data.openDataBase();
@@ -89,16 +89,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String Req = search.getText().toString();
-                data.openDataBase();
-                //Get data request
-                List<LuanvanModel> result = data.getData(Req);
-                //Set data request to LoadList
-                Soluong.setText("Số luận văn : " + result.size());
+                boolean CheckRequest = CheckSearchRequest(Req);
+                if (CheckRequest == true) {
+                    data.openDataBase();
+                    //Get data request
+                    List<LuanvanModel> result = data.getData( Req);
+                    //Set data request to LoadList
+                    Soluong.setText("Số luận văn : " + result.size());
+
                 TOTAL_LIST_ITEMS = result.size();
                 Caculatepage(TOTAL_LIST_ITEMS,NUM_ITEMS_PAGE);
                 Btnfooter(noOfBtns,result);
                 CheckBtnBackGroud(0,noOfBtns);
-                LoadList(0, result);
+                LoadList(0, result);}
+                else {
+                    Toast.makeText(MainActivity.this, "Fill into Search ", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -107,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 TOTAL_LIST_ITEMS = Mainscreen.size();
+                Soluong.setText("Số luận văn : " + TOTAL_LIST_ITEMS);
                 Caculatepage(TOTAL_LIST_ITEMS,NUM_ITEMS_PAGE);
                 Btnfooter(noOfBtns,Mainscreen);
                 CheckBtnBackGroud(0,noOfBtns);
@@ -114,6 +121,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        connectServer.Get_LuanvanFromServer(MainActivity.this,data);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        data.deleteDataBase();
+        super.onDestroy();
     }
 
     //Set up for pagvination
@@ -202,33 +222,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //Copy database
-    private boolean copyDataBase(Context context) {
-        OutputStream myOutput = null;
-        int length;
-        // Open your local db as the input stream
-        InputStream myInput = null;
-        try {
-            myInput = context.getAssets().open(Traluanvandb.DB_NAME);
-            // transfer bytes from the inputfile to the
-            // outputfile
-            String outfifename = Traluanvandb.DB_PATH + Traluanvandb.DB_NAME;
-            myOutput = new FileOutputStream(outfifename);
 
-            byte[] buffer = new byte[1024];
-            while ((length = myInput.read(buffer)) > 0) {
-                myOutput.write(buffer, 0, length);
-            }
-            myOutput.close();
-            myOutput.flush();
-            myInput.close();
-            Log.i("Database",
-                    "New database has been copied to device!");
+    private boolean CheckSearchRequest (String Req){
+        String ReqArray1 [] = Req.split(" ");
+        String ReqArray2 [] = Req.split("%");
+        String ReqArray3 [] = Req.split("%20");
 
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
+        if ((ReqArray1.length == 0) || (ReqArray2.length == 0) ||(ReqArray3.length==0)||(Req.matches(""))) {
+
             return false;
         }
+        else{
+            return true;
+            }
     }
 }
