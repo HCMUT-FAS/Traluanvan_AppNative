@@ -1,4 +1,5 @@
-package com.example.navigation;
+package com.khud.traluanvan;
+
 
 import android.content.Context;
 
@@ -19,11 +20,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.navigation.databinding.FragmentHomeBinding;
+import com.khud.traluanvan.databinding.FragmentHomeBinding;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
+
 import java.util.ArrayList;
 import java.util.List;
 

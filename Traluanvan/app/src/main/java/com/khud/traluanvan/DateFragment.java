@@ -1,6 +1,6 @@
-package com.example.navigation;
+package com.khud.traluanvan;
 
-import android.app.DatePickerDialog;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,22 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleObserver;
 
-import com.example.navigation.databinding.FragmentDateBinding;
-import com.example.navigation.databinding.FragmentHomeBinding;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
-
-import org.jetbrains.annotations.NotNull;
+import com.khud.traluanvan.databinding.FragmentDateBinding;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,7 +40,7 @@ public class DateFragment extends Fragment {
 
 
     @Override
-    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable  Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             Input = savedInstanceState.getStringArrayList(Key);
@@ -93,7 +88,7 @@ public class DateFragment extends Fragment {
         return view;
     }
     @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull  View view, @Nullable  Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //Get LV_Ma from Info_Fragment
         Bundle bundle=this.getArguments();
@@ -170,7 +165,7 @@ public class DateFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull @NotNull Bundle outState) {
+    public void onSaveInstanceState(@NonNull  Bundle outState) {
         outState.putStringArrayList(Key,Input);
         super.onSaveInstanceState(outState);
     }
