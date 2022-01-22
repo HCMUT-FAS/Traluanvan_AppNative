@@ -1,25 +1,18 @@
 package com.khud.traluanvan;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 public class InfoFragment extends Fragment {
@@ -36,8 +29,6 @@ public class InfoFragment extends Fragment {
             gvhuongdan_2;
     //
     Traluanvandb data;
-
-
 
     @Nullable
     @Override
@@ -64,7 +55,7 @@ public class InfoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         //Start
         LV_Ma = getArguments().getString("LV_Ma");
-        transferdata(LV_Ma);
+
         int viewtype=getArguments().getInt("view_type");
         data.openDataBase();
         LuanvanModel Info = data.getLuanVan(LV_Ma);
@@ -94,11 +85,5 @@ public class InfoFragment extends Fragment {
             }
         }
 
-    }
-    private void transferdata(String LV_Ma){
-        Bundle bundle = new Bundle();
-        bundle.putString("LV_Ma", LV_Ma);
-        DateFragment dateFragment = new DateFragment();
-        dateFragment.setArguments(bundle);
     }
 }

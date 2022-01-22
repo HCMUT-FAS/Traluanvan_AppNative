@@ -1,6 +1,5 @@
 package com.khud.traluanvan;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +18,8 @@ import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.khud.traluanvan.databinding.FragmentDateBinding;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class DateFragment extends Fragment {
 
 
     @Override
-    public void onCreate(@Nullable  Bundle savedInstanceState) {
+    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             Input = savedInstanceState.getStringArrayList(Key);
@@ -88,7 +89,7 @@ public class DateFragment extends Fragment {
         return view;
     }
     @Override
-    public void onViewCreated(@NonNull  View view, @Nullable  Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //Get LV_Ma from Info_Fragment
         Bundle bundle=this.getArguments();
@@ -165,7 +166,7 @@ public class DateFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull  Bundle outState) {
+    public void onSaveInstanceState(@NonNull @NotNull Bundle outState) {
         outState.putStringArrayList(Key,Input);
         super.onSaveInstanceState(outState);
     }

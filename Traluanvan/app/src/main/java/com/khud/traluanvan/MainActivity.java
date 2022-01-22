@@ -10,16 +10,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
+import androidx.navigation.NavController;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.jetbrains.annotations.NotNull;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView navigationView;
     private ActionBar toolbar;
     FragmentManager fragmentManager;
-
+    NavController navController;
     Fragment selectedFragment = null;
     String tag = "Search";
     BottomNavigationView bottomNavigationView;
@@ -39,22 +40,22 @@ public class MainActivity extends AppCompatActivity {
 //        NavigationUI.setupWithNavController(navigationView, navController);
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull  MenuItem item) {
+            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_search:
                         if (fragmentManager.findFragmentByTag("Info") == null){
-                            selectedFragment = new SearchFragment();
-                            tag = "Search";
-                            viewFragment(selectedFragment, tag);
+                                selectedFragment = new SearchFragment();
+                                tag = "Search";
+                                viewFragment(selectedFragment, tag);
                         }
-                        else {
-                            tag = "Last";
-                            fragmentManager.beginTransaction()
-                                    .replace(R.id.frame_container, fragmentManager
-                                            .findFragmentByTag("Info"))
-                                    .addToBackStack("Info")
-                                    .commit();
-                        }
+                         else {
+                                tag = "Last";
+                                fragmentManager.beginTransaction()
+                                        .replace(R.id.frame_container, fragmentManager
+                                                .findFragmentByTag("Info"))
+                                        .addToBackStack("Info")
+                                        .commit();
+                            }
                         return true;
                     case R.id.nav_date:
                         selectedFragment = new DateFragment();
@@ -126,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
     }
-    // OnBackStackChanged callback
+       // OnBackStackChanged callback
 //        fragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
 //            @Override
 //            public void onBackStackChanged() {

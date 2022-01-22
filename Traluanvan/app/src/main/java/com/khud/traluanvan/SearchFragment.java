@@ -1,15 +1,11 @@
 package com.khud.traluanvan;
 
-
 import android.content.Context;
-
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -20,16 +16,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+
 import com.khud.traluanvan.databinding.FragmentHomeBinding;
 
 import org.jetbrains.annotations.NotNull;
-
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class SearchFragment extends Fragment  implements SwipeRefreshLayout.OnRefreshListener,LuanvanAdapter.OnLoadMoreListener {
+public class SearchFragment extends Fragment  implements SwipeRefreshLayout.OnRefreshListener, LuanvanAdapter.OnLoadMoreListener {
     //Set databasse
     Traluanvandb data;
     //Set Layout
@@ -88,6 +84,13 @@ public class SearchFragment extends Fragment  implements SwipeRefreshLayout.OnRe
         luanvanAdapter= new LuanvanAdapter(mcontext,this::onLoadMore);
         rcvluanvantracuu.setAdapter(luanvanAdapter);
         Page = 0;
+        ConnectServer connectServer=new ConnectServer();
+        try {
+            connectServer.Get_LuanvanFromServer(mcontext,data);
+        }
+        catch (Exception e){
+            connectServer.Copy_Database_local(mcontext,data);
+        }
         return rootview;
     }
 

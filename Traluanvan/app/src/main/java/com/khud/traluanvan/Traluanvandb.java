@@ -6,14 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
-
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,7 +85,7 @@ public class Traluanvandb extends SQLiteOpenHelper {
             Log.e(TAG, "openDataBase: Open ");
             return;
         }
-        db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+        db = SQLiteDatabase.openOrCreateDatabase(myPath, null);
     }
     public void closeDataBase() {
         if (db != null) {

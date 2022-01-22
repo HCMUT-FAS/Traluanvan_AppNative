@@ -1,4 +1,5 @@
 package com.khud.traluanvan;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,13 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class LuanvanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -43,7 +45,7 @@ public class LuanvanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull  ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         // Return a new holder instance
         View view = null;
         switch(viewType){
@@ -72,7 +74,7 @@ public class LuanvanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull  RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull @NotNull RecyclerView.ViewHolder holder, int position) {
         LuanvanModel luanvan = mListLuanvan.get(position);
         if (getItemViewType(position)!=0){
             ((LuanvanViewHolder) holder).setdata(mListLuanvan.get(position),getItemViewType(position));
@@ -145,7 +147,7 @@ public class LuanvanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return true;
         }
 
-        public LuanvanViewHolder(@NonNull  View itemView, int viewtype) {
+        public LuanvanViewHolder(@NonNull @NotNull View itemView, int viewtype) {
             super(itemView);
             if (viewtype != 0) {
                 name = itemView.findViewById(R.id.tenluanvan);

@@ -1,5 +1,4 @@
 package com.khud.traluanvan;
-
 //Set model Luanvan
 public class LuanvanModel {
     private int LV_Ma;

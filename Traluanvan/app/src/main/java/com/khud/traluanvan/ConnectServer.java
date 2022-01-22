@@ -2,8 +2,10 @@ package com.khud.traluanvan;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -17,7 +19,9 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ConnectServer {
     public ProgressDialog dialog = null;
@@ -56,6 +60,62 @@ public class ConnectServer {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         // Adding the StringRequest object into requestQueue.
         requestQueue.add(stringRequest);
+    }
+
+    //Sign up
+    public void Signup(Context context, String name, String e, String phone, String password, TextView error) {
+        dialog = ProgressDialog.show(context, "", "Please wait...", true);
+        // Creating string request with post method.
+        String serverAPIURL = "http://traluanvan.herokuapp.com/register";
+
+//        Toast.makeText(context,serverAPIURL,Toast.LENGTH_SHORT).show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, serverAPIURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String ServerResponse) {
+
+                        // Hiding the progress dialog after all task complete.
+                        //progressDialog.dismiss();
+
+                        // Showing Echo Response Message Coming From Server.
+                        dialog.dismiss();
+                        Toast.makeText(context, "Thông tin đã được gửi", Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        // Hiding the progress dialog after all task complete.
+                        //progressDialog.dismiss();
+
+                        // Showing error message if something goes wrong.
+                        dialog.dismiss();
+                        Toast.makeText(context, volleyError.toString(), Toast.LENGTH_LONG).show();
+                        error.setText(volleyError.toString());
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams () {
+                Map<String, String> params = new HashMap<>();
+                params.put("name", name);
+                params.put("email", e );
+                params.put("phone", phone);
+                params.put("password", password);
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params2 = new HashMap<String, String>();
+                params2.put("Content-Type", "application/json; charset=UTF-8");
+                params2.put("access_token", "7ACFdsd328BEA81sssdfgg556B91");
+                return params2;
+            }
+        };
+            // Creating RequestQueue.
+            RequestQueue requestQueue = Volley.newRequestQueue(context);
+            // Adding the StringRequest object into requestQueue.
+            requestQueue.add(stringRequest);
+
     }
 
     //Get data
@@ -130,9 +190,7 @@ public class ConnectServer {
                                 String GV2_Ten =  LuanvanObject.getString("GV2_Ten");
                                 //Insert data to database
                                 try {
-
                                     database.InsertData(LV_Ma, LV_Ten, LV_TenTiengAnh, SV1_Ten, MSSV1, SV2_Ten, MSSV2, GV1_Ten, GV2_Ten);
-
                                 }
                                 catch (Exception e) {
                                     dialog.dismiss();
@@ -153,6 +211,7 @@ public class ConnectServer {
 
                         // Hiding the progress dialog after all task complete.
                         dialog.dismiss();
+                        Copy_Database_local(context,database);
 
                         // Showing error message if something goes wrong.
 //                        Copy_Database_local(context,database);
@@ -163,7 +222,7 @@ public class ConnectServer {
         // Adding the StringRequest object into requestQueue.
         requestQueue.add(stringRequest);
     }
- public void Copy_Database_local(Context mcontext,Traluanvandb data){
+ public void Copy_Database_local(Context mcontext, Traluanvandb data){
              File database = mcontext.getApplicationContext().getDatabasePath(data.DB_NAME);
         if (false == database.exists()) {
             data.getReadableDatabase();
