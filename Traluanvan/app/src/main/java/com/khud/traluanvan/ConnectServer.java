@@ -66,7 +66,7 @@ public class ConnectServer {
     public void Signup(Context context, String name, String e, String phone, String password, TextView error) {
         dialog = ProgressDialog.show(context, "", "Please wait...", true);
         // Creating string request with post method.
-        String serverAPIURL = "http://traluanvan.herokuapp.com/register";
+        String serverAPIURL = context.getResources().getString(R.string.Server)+context.getResources().getString(R.string.Login);
 
 //        Toast.makeText(context,serverAPIURL,Toast.LENGTH_SHORT).show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, serverAPIURL,
@@ -79,7 +79,7 @@ public class ConnectServer {
 
                         // Showing Echo Response Message Coming From Server.
                         dialog.dismiss();
-                        Toast.makeText(context, "Thông tin đã được gửi", Toast.LENGTH_LONG).show();
+                        error.setText(ServerResponse.toString());
                     }
                 },
                 new Response.ErrorListener() {
@@ -97,17 +97,14 @@ public class ConnectServer {
             @Override
             protected Map<String, String> getParams () {
                 Map<String, String> params = new HashMap<>();
-                params.put("name", name);
-                params.put("email", e );
-                params.put("phone", phone);
+                params.put("email", e);
                 params.put("password", password);
                 return params;
             }
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params2 = new HashMap<String, String>();
-                params2.put("Content-Type", "application/json; charset=UTF-8");
-                params2.put("access_token", "7ACFdsd328BEA81sssdfgg556B91");
+                params2.put("Accept", "application/json");
                 return params2;
             }
         };
@@ -115,7 +112,6 @@ public class ConnectServer {
             RequestQueue requestQueue = Volley.newRequestQueue(context);
             // Adding the StringRequest object into requestQueue.
             requestQueue.add(stringRequest);
-
     }
 
     //Get data

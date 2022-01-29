@@ -7,9 +7,9 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="Server">"http://traluanvan.herokuapp.com"</string>
+    <string name="Login">"/api/login"</string>
 
-    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="Database">"/api/data"</string>
 
 </resources>
