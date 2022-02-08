@@ -5,43 +5,39 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/navigation_search">
 
-<!--    <fragment-->
-<!--        android:id="@+id/FirstFragment"-->
-<!--        android:name="com.example.testapp.FirstFragment"-->
-<!--        android:label="@string/first_fragment_label"-->
-<!--        tools:layout="@layout/fragment_first">-->
-
-<!--        <action-->
-<!--            android:id="@+id/action_FirstFragment_to_SecondFragment"-->
-<!--            app:destination="@id/SecondFragment" />-->
-<!--    </fragment>-->
-<!--    <fragment-->
-<!--        android:id="@+id/SecondFragment"-->
-<!--        android:name="com.example.testapp.SecondFragment"-->
-<!--        android:label="@string/second_fragment_label"-->
-<!--        tools:layout="@layout/fragment_second">-->
-
-<!--        <action-->
-<!--            android:id="@+id/action_SecondFragment_to_FirstFragment"-->
-<!--            app:destination="@id/FirstFragment" />-->
-<!--    </fragment>-->
-
     <fragment
     android:id="@+id/navigation_search"
-    android:name="com.example.navigation.SearchFragment"
+    android:name="com.khud.traluanvan.SearchFragment"
     android:label="Search"
-    tools:layout="@layout/fragment_home" />
-
-<fragment
-    android:id="@+id/navigation_date"
-    android:name="com.example.navigation.DateFragment"
-    android:label="Date"
-    tools:layout="@layout/fragment_date" />
+    tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_search_to_infoFragment"
+            app:destination="@id/infoFragment" />
+    </fragment>
 
     <fragment
-    android:id="@+id/navigation_menu"
-    android:name="com.example.navigation.MenuFragment"
-    android:label="Menu"
-    tools:layout="@layout/fragment_menu" />
+        android:id="@+id/navigation_date"
+        android:name="com.khud.traluanvan.DateFragment"
+        android:label="Date"
+        tools:layout="@layout/fragment_date" />
+
+    <fragment
+        android:id="@+id/navigation_menu"
+        android:name="com.khud.traluanvan.MenuFragment"
+        android:label="Menu"
+        tools:layout="@layout/fragment_menu" />
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="com.khud.traluanvan.InfoFragment"
+        android:label="InfoFragment" />
+    <fragment
+        android:id="@+id/loginFragment2"
+        android:name="com.khud.traluanvan.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment2_to_navigation_date"
+            app:destination="@id/navigation_date" />
+    </fragment>
 
 </navigation>
