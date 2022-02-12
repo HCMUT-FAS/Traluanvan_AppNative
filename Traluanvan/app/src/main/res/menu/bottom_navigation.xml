@@ -5,9 +5,9 @@
         android:icon="@drawable/ic_baseline_search_24"
         android:title="@string/title_activity_main" />
     <item
-        android:id="@+id/nav_date"
+        android:id="@+id/nav_login"
         android:icon="@drawable/ic_baseline_date_range_24"
-        android:title="@string/data_fragment_label" />
+        android:title="@string/login_fragment_label" />
     <item
         android:id="@+id/nav_menu"
         android:icon="@drawable/ic_baseline_menu_24"

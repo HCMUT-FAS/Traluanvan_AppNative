@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
                                         .commit();
                             }
                         return true;
-                    case R.id.nav_date:
-                        selectedFragment = new DateFragment();
+                    case R.id.nav_login:
+                        selectedFragment = new LoginFragment();
                         tag = "Date";
                         viewFragment(selectedFragment, tag);
                         return true;

@@ -21,9 +21,7 @@ public class Info_LuanvanFragment extends Fragment {
     TextView tenluanvan,
             tensinhvien_1,
             tensinhvien_2,
-            tenluanvan_tienganh,
-            masinhvien_1,
-            masinhvien_2,
+//            tenluanvan_tienganh,
             maluanvan,
             gvhuongdan_1,
             gvhuongdan_2;
