@@ -8,8 +8,8 @@
     <string name="previous">Previous</string>
 
     <string name="Server">"http://traluanvan.herokuapp.com"</string>
-    <string name="Login">"/api/login"</string>
-    <string name="Database">"/api/data"</string>
+    <string name="Login_route">"/api/login"</string>
+    <string name="Database_route">"/api/data"</string>
     <string name="Token">"wWJ1laHkaVFP4eQFqeXzviutr8aJ7G6cth9GJCKB"</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

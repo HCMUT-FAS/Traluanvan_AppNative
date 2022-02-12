@@ -54,11 +54,4 @@ public class MenuFragment extends Fragment {
         });
 
     }
-    private void regrister(){
-        final String username = editTextUsername.getText().toString();
-        final String email = editTextEmail.getText().toString().trim();
-        final String password = editTextPassword.getText().toString();
-        final String phone = editphone.getText().toString();
-        connectServer.Signup(mcontext,username,email,phone,password,error);
-    }
 }
