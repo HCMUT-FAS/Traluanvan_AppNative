@@ -243,7 +243,7 @@ public class LuanvanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         Bundle bundle = new Bundle();
         bundle.putString("LV_Ma", Integer.toString(mListLuanvan.get(position).getLV_Ma()));
         bundle.putInt("view_type",getItemViewType(position));
-        InfoFragment infoFragment = new InfoFragment();
+        Info_LuanvanFragment infoFragment = new Info_LuanvanFragment();
         infoFragment.setArguments(bundle);
         FragmentManager fragmentManager=((MainActivity)mContext).getSupportFragmentManager();
         FragmentTransaction transaction=fragmentManager.beginTransaction();
