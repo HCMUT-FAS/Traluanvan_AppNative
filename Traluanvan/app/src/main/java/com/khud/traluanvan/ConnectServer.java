@@ -61,23 +61,30 @@ public class ConnectServer {
         requestQueue.add(stringRequest);
     }
 
-    //Sign up
+    //Login
     public void Login(Context mcontext, String e, String password) {
+        //Put Body Request
+        JSONObject body=new JSONObject();
+        try {
+            body.put("email",e);
+            body.put("password",password);
+        } catch (JSONException exception) {
+            exception.printStackTrace();
+        }
         // Creating string request with post method.
         String serverAPIURL = mcontext.getResources().getString(R.string.Server)+mcontext.getResources().getString(R.string.Login_route);
 
 //        Toast.makeText(context,serverAPIURL,Toast.LENGTH_SHORT).show();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, serverAPIURL,
-                new Response.Listener<String>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, serverAPIURL,body,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String ServerResponse) {
-
-                        // Hiding the progress dialog after all task complete.
-                        //progress
-
-                        // Showing Echo Response Message Coming From Server.
-
-                        Toast.makeText(mcontext,ServerResponse,Toast.LENGTH_SHORT).show();
+                    public void onResponse(JSONObject ServerResponse) {
+                        try {
+                            JSONObject User_info=ServerResponse.getJSONObject("user");
+                            Toast.makeText(mcontext,User_info.getString("name"),Toast.LENGTH_SHORT).show();
+                        } catch (JSONException exception) {
+                            exception.printStackTrace();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -90,25 +97,20 @@ public class ConnectServer {
 
                         Toast.makeText(mcontext, volleyError.toString(), Toast.LENGTH_LONG).show();
                     }
-                }) {
-            @Override
-            protected Map<String, String> getParams () {
-                Map<String, String> params = new HashMap<>();
-                params.put("email", e);
-                params.put("password", password);
-                return params;
-            }
+                })
+            {
+            //Put Header
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params2 = new HashMap<String, String>();
-                params2.put("Accept", "application/json");
-                return params2;
+                Map<String, String> header = new HashMap<String, String>();
+                header.put("Accept", "application/json");
+                return header;
             }
         };
             // Creating RequestQueue.
             RequestQueue requestQueue = Volley.newRequestQueue(mcontext);
             // Adding the StringRequest object into requestQueue.
-            requestQueue.add(stringRequest);
+            requestQueue.add(jsonObjectRequest);
     }
 
     //Sign up

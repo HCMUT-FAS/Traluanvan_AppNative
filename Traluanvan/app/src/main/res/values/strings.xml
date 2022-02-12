@@ -6,13 +6,13 @@
     <string name="menu_fragment_label">Menu</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
+    <!-- Server-->
     <string name="Server">"http://traluanvan.herokuapp.com"</string>
     <string name="Login_route">"/api/login"</string>
     <string name="Database_route">"/api/data"</string>
     <string name="Token">"wWJ1laHkaVFP4eQFqeXzviutr8aJ7G6cth9GJCKB"</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-
+    <!--User SharedPreference-->
+    <string name="SharedPreference">"KHUD"</string>
+    <string name="User_email">"EMAIL"</string>
+    <string name="User_password">"PASSWORD"</string>
 </resources>
