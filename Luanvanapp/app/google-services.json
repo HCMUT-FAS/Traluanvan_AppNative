@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "510788274022",
+    "project_id": "poised-legend-318312",
+    "storage_bucket": "poised-legend-318312.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510788274022:android:655a3374e3f12a482b2aa7",
+        "android_client_info": {
+          "package_name": "com.example.luanvanapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "510788274022-c98u8lqr1pvcmjic1q3mmj32ciq8c2ng.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.googlesignin",
+            "certificate_hash": "ed70c3dfe3f651c10af8a2f11d0e3c80e7afb1d5"
+          }
+        },
+        {
+          "client_id": "510788274022-8akls0kfm2ntudhgrm07gg7b85t3m4os.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEfKHFTyCtBzePoFRIqvEeC26ZPLc5CqQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "510788274022-8akls0kfm2ntudhgrm07gg7b85t3m4os.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

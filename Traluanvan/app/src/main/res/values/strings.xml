@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Tra luận văn</string>
+    <string name="title_activity_main">Search</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="data_fragment_label">Data</string>
+    <string name="menu_fragment_label">Menu</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="Server">"http://traluanvan.herokuapp.com"</string>
+    <string name="Login">"/api/login"</string>
+    <string name="Database">"/api/data"</string>
+    <string name="Token">"wWJ1laHkaVFP4eQFqeXzviutr8aJ7G6cth9GJCKB"</string>
+
+
+</resources>

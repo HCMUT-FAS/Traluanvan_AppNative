@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_search">
+
+    <fragment
+    android:id="@+id/navigation_search"
+    android:name="com.khud.traluanvan.SearchFragment"
+    android:label="Search"
+    tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_search_to_infoFragment"
+            app:destination="@id/infoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_date"
+        android:name="com.khud.traluanvan.DateFragment"
+        android:label="Date"
+        tools:layout="@layout/fragment_date" />
+
+    <fragment
+        android:id="@+id/navigation_menu"
+        android:name="com.khud.traluanvan.MenuFragment"
+        android:label="Menu"
+        tools:layout="@layout/fragment_menu" />
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="com.khud.traluanvan.InfoFragment"
+        android:label="InfoFragment" />
+    <fragment
+        android:id="@+id/loginFragment2"
+        android:name="com.khud.traluanvan.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment2_to_navigation_date"
+            app:destination="@id/navigation_date" />
+    </fragment>
+
+</navigation>
