@@ -48,8 +48,8 @@ public class MenuFragment extends Fragment {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mcontext,"HI",Toast.LENGTH_SHORT).show();
-                regrister();
+
+                connectServer.Get_database(mcontext,error);
             }
         });
 

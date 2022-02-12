@@ -10,6 +10,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -66,7 +67,7 @@ public class ConnectServer {
     public void Signup(Context context, String name, String e, String phone, String password, TextView error) {
         dialog = ProgressDialog.show(context, "", "Please wait...", true);
         // Creating string request with post method.
-        String serverAPIURL = "http://traluanvan.herokuapp.com/register";
+        String serverAPIURL = context.getResources().getString(R.string.Server)+context.getResources().getString(R.string.Login);
 
 //        Toast.makeText(context,serverAPIURL,Toast.LENGTH_SHORT).show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, serverAPIURL,
@@ -79,7 +80,7 @@ public class ConnectServer {
 
                         // Showing Echo Response Message Coming From Server.
                         dialog.dismiss();
-                        Toast.makeText(context, "Thông tin đã được gửi", Toast.LENGTH_LONG).show();
+                        error.setText(ServerResponse.toString());
                     }
                 },
                 new Response.ErrorListener() {
@@ -97,17 +98,14 @@ public class ConnectServer {
             @Override
             protected Map<String, String> getParams () {
                 Map<String, String> params = new HashMap<>();
-                params.put("name", name);
-                params.put("email", e );
-                params.put("phone", phone);
+                params.put("email", e);
                 params.put("password", password);
                 return params;
             }
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params2 = new HashMap<String, String>();
-                params2.put("Content-Type", "application/json; charset=UTF-8");
-                params2.put("access_token", "7ACFdsd328BEA81sssdfgg556B91");
+                params2.put("Accept", "application/json");
                 return params2;
             }
         };
@@ -115,9 +113,82 @@ public class ConnectServer {
             RequestQueue requestQueue = Volley.newRequestQueue(context);
             // Adding the StringRequest object into requestQueue.
             requestQueue.add(stringRequest);
-
     }
 
+    //Sign up
+    public void Get_database(Context context, TextView error) {
+        dialog = ProgressDialog.show(context, "", "Please wait...", true);
+        // Creating string request with post method.
+        String serverAPIURL = context.getResources().getString(R.string.Server)+context.getResources().getString(R.string.Database);
+        String token=context.getResources().getString(R.string.Token);
+//        Toast.makeText(context,serverAPIURL,Toast.LENGTH_SHORT).show();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, serverAPIURL,null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject ServerResponse) {
+
+                        // Hiding the progress dialog after all task complete.
+                        //progressDialog.dismiss();
+
+                        // Showing Echo Response Message Coming From Server.
+                        dialog.dismiss();
+                        try {
+                            JSONArray data=ServerResponse.getJSONArray("data");
+//                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject LuanvanObject = data.getJSONObject(0);
+                                Integer LV_Ma = LuanvanObject.getInt("id");
+                                String LV_Ten = LuanvanObject.getString("nameVN");
+                                String LV_TenTiengAnh =  LuanvanObject.getString("nameEN");
+                                String SV1_Ten = LuanvanObject.getString("student1");
+//                                String MSSV1 = LuanvanObject.getString("MSSV1");
+                                String SV2_Ten=  LuanvanObject.getString("student2");
+//                                String MSSV2 =  LuanvanObject.getString("MSSV2");
+                                String GV1_Ten = LuanvanObject.getString("instructor1");
+                                String GV2_Ten =  LuanvanObject.getString("instructor2");
+                                //Insert data to database
+//                                try {
+//                                    database.InsertData(LV_Ma, LV_Ten, LV_TenTiengAnh, SV1_Ten, MSSV1, SV2_Ten, MSSV2, GV1_Ten, GV2_Ten);
+//                                }
+//                                catch (Exception e) {
+//                                    dialog.dismiss();
+//                                    Toast.makeText(context,e.toString(),Toast.LENGTH_SHORT).show();
+//                                }
+//                                LuanvanModel newview = new LuanvanModel(LV_Ma, LV_Ten, LV_TenTiengAnh, SV1_Ten, MSSV1, SV2_Ten, MSSV2, GV1_Ten, GV2_Ten);
+//                                Luanvan.add(newview);
+//                            }
+                            error.setText(LuanvanObject.toString());
+                        } catch (JSONException exception) {
+                            error.setText(exception.toString());
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        // Hiding the progress dialog after all task complete.
+                        //progressDialog.dismiss();
+
+                        // Showing error message if something goes wrong.
+                        dialog.dismiss();
+                        Toast.makeText(context, volleyError.toString(), Toast.LENGTH_LONG).show();
+                        error.setText(volleyError.toString());
+                    }
+                }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> header = new HashMap<String, String>();
+                header.put("Accept", "application/json");
+                header.put("Authorization", "Bearer " + token);
+                return header;
+            }
+        };
+        // Creating RequestQueue.
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        // Adding the StringRequest object into requestQueue.
+        requestQueue.add(jsonObjectRequest);
+    }
     //Get data
     //Get Available
     public  void Get_LuanvanAvailable_FromServer (Context context, int i) {
