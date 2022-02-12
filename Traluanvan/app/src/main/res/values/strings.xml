@@ -9,7 +9,8 @@
 
     <string name="Server">"http://traluanvan.herokuapp.com"</string>
     <string name="Login">"/api/login"</string>
-
     <string name="Database">"/api/data"</string>
+    <string name="Token">"wWJ1laHkaVFP4eQFqeXzviutr8aJ7G6cth9GJCKB"</string>
+
 
 </resources>
