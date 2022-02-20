@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
+import com.khud.traluanvan.Server.ServerModel;
 import com.khud.traluanvan.databinding.FragmentHomeBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -84,13 +85,13 @@ public class SearchFragment extends Fragment  implements SwipeRefreshLayout.OnRe
         luanvanAdapter= new LuanvanAdapter(mcontext,this::onLoadMore);
         rcvluanvantracuu.setAdapter(luanvanAdapter);
         Page = 0;
-        ConnectServer connectServer=new ConnectServer();
-        try {
-            connectServer.Get_LuanvanFromServer(mcontext,data);
-        }
-        catch (Exception e){
-            connectServer.Copy_Database_local(mcontext,data);
-        }
+//        ServerModel connectServer=new ServerModel();
+//        try {
+//            connectServer.Get_LuanvanFromServer(mcontext,data);
+//        }
+//        catch (Exception e){
+//            connectServer.Copy_Database_local(mcontext,data);
+//        }
         return rootview;
     }
 

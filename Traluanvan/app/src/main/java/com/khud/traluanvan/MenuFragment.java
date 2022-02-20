@@ -8,31 +8,36 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.khud.traluanvan.databinding.FragmentDateBinding;
+import com.khud.traluanvan.Server.ServerModel;
+import com.khud.traluanvan.User.UserViewModel;
 import com.khud.traluanvan.databinding.FragmentMenuBinding;
 
 
 public class MenuFragment extends Fragment {
-    ConnectServer connectServer;
+    ServerModel connectServer;
     FragmentMenuBinding MenuBinding;
-    EditText editTextUsername, editTextEmail, editTextPassword,editphone;
+    EditText editTextUsername, editTextEmail, editTextPassword, editphone;
     TextView error;
     Button signup;
     Context mcontext;
+    UserViewModel userViewModel;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        MenuBinding = FragmentMenuBinding.inflate(inflater,container,false);
+        MenuBinding = FragmentMenuBinding.inflate(inflater, container, false);
         View view = MenuBinding.getRoot();
-        connectServer=new ConnectServer();
-        mcontext=getActivity();
 
+        mcontext = getActivity();
+        userViewModel =  new ViewModelProvider(getActivity()).get(UserViewModel.class);
         return view;
     }
 
@@ -41,16 +46,29 @@ public class MenuFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         editTextUsername = MenuBinding.editTextUsername;
         editTextEmail = MenuBinding.editTextEmail;
-        editphone= MenuBinding.editphone;
+        editphone = MenuBinding.editphone;
         editTextPassword = MenuBinding.editTextPassword;
-        signup=MenuBinding.buttonRegister;
-        error=MenuBinding.textViewLogin;
+        signup = MenuBinding.buttonRegister;
+        error = MenuBinding.textViewLogin;
+        registerLiveDataListenner();
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                connectServer.Get_database(mcontext,error);
+                error.setText(userViewModel.getdata().get(0).toString());
+
             }
         });
 
+    }
+
+    public void registerLiveDataListenner() {
+        userViewModel.getLoginState().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean state) {
+                if (state) {
+                    error.setText("Something change");
+                }
+            }
+        });
     }
 }
