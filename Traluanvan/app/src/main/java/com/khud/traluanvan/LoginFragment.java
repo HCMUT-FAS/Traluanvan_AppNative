@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -60,15 +61,16 @@ public class LoginFragment extends Fragment {
         final String password = password_input.getText().toString();
         userViewModel.setLogin(mcontext,email,password);
         UpdateView();
-
     }
     private void UpdateView(){
         userViewModel.getLoginState().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean state) {
-                fragmentManager.popBackStack("Date",1);
                 if(state){
                     Toast.makeText(mcontext,"Login Sucessfull",Toast.LENGTH_LONG).show();
+                    FragmentTransaction transaction=fragmentManager.beginTransaction();
+                    transaction.replace(R.id.frame_container, new DateFragment(),"Info_User").addToBackStack("Info_User");
+                    transaction.commit();
                 }
                 else {
                     Toast.makeText(mcontext, "Login Fail", Toast.LENGTH_LONG).show();

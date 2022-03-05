@@ -37,7 +37,7 @@ public class MenuFragment extends Fragment {
         View view = MenuBinding.getRoot();
 
         mcontext = getActivity();
-        userViewModel =  new ViewModelProvider(getActivity()).get(UserViewModel.class);
+        userViewModel = new ViewModelProvider(getActivity()).get(UserViewModel.class);
         return view;
     }
 
@@ -50,25 +50,12 @@ public class MenuFragment extends Fragment {
         editTextPassword = MenuBinding.editTextPassword;
         signup = MenuBinding.buttonRegister;
         error = MenuBinding.textViewLogin;
-        registerLiveDataListenner();
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 error.setText(userViewModel.getdata().get(0).toString());
-
             }
         });
 
-    }
-
-    public void registerLiveDataListenner() {
-        userViewModel.getLoginState().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean state) {
-                if (state) {
-                    error.setText("Something change");
-                }
-            }
-        });
     }
 }

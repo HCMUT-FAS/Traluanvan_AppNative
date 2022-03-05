@@ -49,9 +49,7 @@ public class SearchFragment extends Fragment  implements SwipeRefreshLayout.OnRe
     //Save last Query Input
     String lastSearchQuery = "";
 
-
-
-
+    //Load last search key
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -39,20 +39,11 @@ public class UserViewModel extends ViewModel {
          public void onDataReceived(List respone) {
             Loginstate.postValue(true);
             UserData=respone;
-            Toast.makeText(mcontext,UserData.toString(),Toast.LENGTH_SHORT).show();
          }
          @Override
          public void onError(int error) {
-
          }
       });
       serverModel.Login(mcontext,e,password);
-   }
-
-   public MutableLiveData<UserInfoModel>getUserInfo(){
-      return userInfoData;
-   }
-   public  void setUserInfo(UserInfoModel userInfoModel){
-      userInfoData.setValue(userInfoModel);
    }
 }
