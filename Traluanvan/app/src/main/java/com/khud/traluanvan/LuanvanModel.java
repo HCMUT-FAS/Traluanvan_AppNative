@@ -94,12 +94,5 @@ public class LuanvanModel {
         this.GV2_Ten = GV2_Ten;
     }
 
-    @Override
-    public String toString() {
-        String Luanvan= " Tên luận văn :" + LV_Ten +
-                "\n Sinh viên :" + SV1_Ten +
-                "," + SV2_Ten ;
-        return Luanvan;
-    }
 
 }

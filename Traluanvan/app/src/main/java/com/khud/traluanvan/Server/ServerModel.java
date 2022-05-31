@@ -1,6 +1,5 @@
-package com.khud.traluanvan;
+package com.khud.traluanvan.Server;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -10,9 +9,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.khud.traluanvan.LuanvanModel;
+import com.khud.traluanvan.R;
+import com.khud.traluanvan.Traluanvandb;
+import com.khud.traluanvan.User.UserInfoModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,11 +28,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ConnectServer {
-    public ProgressDialog dialog = null;
+public class ServerModel {
+    List<UserInfoModel> userdata;
+    Listener listener;
+
+    public ServerModel(Listener listener) {
+        this.listener = listener;
+    }
+
+    ServerController serverController=new ServerController();
     //Send data
-    public void SendDataToServer(Context context,String e, String tsv, String msv, String mlv,String sdt,String d ) {
-        dialog = ProgressDialog.show(context, "", "Please wait...", true);
+    public void SendDataToServer(Context mcontext,String e, String tsv, String msv, String mlv,String sdt,String d ) {
         // Creating string request with post method.
         String serverAPIURL = "https://traluanvan.herokuapp.com/android/insert-data-form-thong-tin.php";
         serverAPIURL=serverAPIURL+"?e="+e+"&tsv="+tsv+"&msv="+msv+"&mlv="+mlv+"&sdt="+sdt+"&d="+d;
@@ -39,87 +49,84 @@ public class ConnectServer {
                     public void onResponse(String ServerResponse) {
 
                         // Hiding the progress dialog after all task complete.
-                        //progressDialog.dismiss();
+                        //progress
 
                         // Showing Echo Response Message Coming From Server.
-                        dialog.dismiss();
-                        Toast.makeText(context,"Thông tin đã được gửi" , Toast.LENGTH_LONG).show();
+
+                        Toast.makeText(mcontext,ServerResponse, Toast.LENGTH_LONG).show();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         // Hiding the progress dialog after all task complete.
-                        //progressDialog.dismiss();
+                        //progress
 
                         // Showing error message if something goes wrong.
-                        dialog.dismiss();
-                        Toast.makeText(context, volleyError.toString(), Toast.LENGTH_LONG).show();
+
+                        Toast.makeText(mcontext, volleyError.toString(), Toast.LENGTH_LONG).show();
                     }
                 }) ;
         // Creating RequestQueue.
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        RequestQueue requestQueue = Volley.newRequestQueue(mcontext);
         // Adding the StringRequest object into requestQueue.
         requestQueue.add(stringRequest);
     }
+    //Login
+    public void Login(Context mcontext, String e, String password) {
+        ServerController serverController=new ServerController();
 
-    //Sign up
-    public void Signup(Context context, String name, String e, String phone, String password, TextView error) {
-        dialog = ProgressDialog.show(context, "", "Please wait...", true);
-        // Creating string request with post method.
-        String serverAPIURL = context.getResources().getString(R.string.Server)+context.getResources().getString(R.string.Login);
-
-//        Toast.makeText(context,serverAPIURL,Toast.LENGTH_SHORT).show();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, serverAPIURL,
-                new Response.Listener<String>() {
+        //Put Body Request
+        JSONObject body = new JSONObject();
+        try {
+            body.put("email", e);
+            body.put("password", password);
+        } catch (JSONException exception) {
+            exception.printStackTrace();
+        }
+        // Creating request with post method.
+        String serverAPIURL = mcontext.getResources().getString(R.string.Server) + mcontext.getResources().getString(R.string.Login_route);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, serverAPIURL, body,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String ServerResponse) {
-
-                        // Hiding the progress dialog after all task complete.
-                        //progressDialog.dismiss();
-
-                        // Showing Echo Response Message Coming From Server.
-                        dialog.dismiss();
-                        error.setText(ServerResponse.toString());
+                    public void onResponse(JSONObject ServerResponse) {
+                        try {
+                             JSONObject Respone = ServerResponse.getJSONObject("user");
+                             userdata =serverController.FetchUser(Respone);
+                        } catch (JSONException exception) {
+                            exception.printStackTrace();
+                        }
+                        //Set data change when have respone
+                        if (listener != null) {
+                            listener.onDataReceived(userdata);
+                        }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        // Hiding the progress dialog after all task complete.
-                        //progressDialog.dismiss();
-
                         // Showing error message if something goes wrong.
-                        dialog.dismiss();
-                        Toast.makeText(context, volleyError.toString(), Toast.LENGTH_LONG).show();
-                        error.setText(volleyError.toString());
+                        VolleyLog.d("Volley ", "Error: "
+                                + volleyError.toString());
                     }
                 }) {
-            @Override
-            protected Map<String, String> getParams () {
-                Map<String, String> params = new HashMap<>();
-                params.put("email", e);
-                params.put("password", password);
-                return params;
-            }
+            //Put Header
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params2 = new HashMap<String, String>();
-                params2.put("Accept", "application/json");
-                return params2;
+                Map<String, String> header = new HashMap<String, String>();
+                header.put("Accept", "application/json");
+                return header;
             }
         };
-            // Creating RequestQueue.
-            RequestQueue requestQueue = Volley.newRequestQueue(context);
-            // Adding the StringRequest object into requestQueue.
-            requestQueue.add(stringRequest);
+        // Creating RequestQueue.
+        RequestQueue requestQueue = Volley.newRequestQueue(mcontext);
+        // Adding the StringRequest object into requestQueue.
+        requestQueue.add(jsonObjectRequest);
     }
-
-    //Sign up
+    //Get database
     public void Get_database(Context context, TextView error) {
-        dialog = ProgressDialog.show(context, "", "Please wait...", true);
         // Creating string request with post method.
-        String serverAPIURL = context.getResources().getString(R.string.Server)+context.getResources().getString(R.string.Database);
+        String serverAPIURL = context.getResources().getString(R.string.Server)+context.getResources().getString(R.string.Database_route);
         String token=context.getResources().getString(R.string.Token);
 //        Toast.makeText(context,serverAPIURL,Toast.LENGTH_SHORT).show();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, serverAPIURL,null,
@@ -128,10 +135,10 @@ public class ConnectServer {
                     public void onResponse(JSONObject ServerResponse) {
 
                         // Hiding the progress dialog after all task complete.
-                        //progressDialog.dismiss();
+                        //progress
 
                         // Showing Echo Response Message Coming From Server.
-                        dialog.dismiss();
+
                         try {
                             JSONArray data=ServerResponse.getJSONArray("data");
 //                            for (int i = 0; i < jsonArray.length(); i++) {
@@ -150,7 +157,7 @@ public class ConnectServer {
 //                                    database.InsertData(LV_Ma, LV_Ten, LV_TenTiengAnh, SV1_Ten, MSSV1, SV2_Ten, MSSV2, GV1_Ten, GV2_Ten);
 //                                }
 //                                catch (Exception e) {
-//                                    dialog.dismiss();
+//
 //                                    Toast.makeText(context,e.toString(),Toast.LENGTH_SHORT).show();
 //                                }
 //                                LuanvanModel newview = new LuanvanModel(LV_Ma, LV_Ten, LV_TenTiengAnh, SV1_Ten, MSSV1, SV2_Ten, MSSV2, GV1_Ten, GV2_Ten);
@@ -167,10 +174,10 @@ public class ConnectServer {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         // Hiding the progress dialog after all task complete.
-                        //progressDialog.dismiss();
+                        //progress
 
                         // Showing error message if something goes wrong.
-                        dialog.dismiss();
+
                         Toast.makeText(context, volleyError.toString(), Toast.LENGTH_LONG).show();
                         error.setText(volleyError.toString());
                     }
@@ -192,14 +199,13 @@ public class ConnectServer {
     //Get data
     //Get Available
     public  void Get_LuanvanAvailable_FromServer (Context context, int i) {
-        dialog = ProgressDialog.show(context, "", "Please wait...", true);
         String serverAPIURL = "https://traluanvan.herokuapp.com/android/select-data-available.php";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, serverAPIURL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String ServerResponse) {
                         try {
-                            dialog.dismiss();
+
                             //JSONObject obj = new JSONObject(ServerResponse);
                             JSONArray jsonArray = new JSONArray(ServerResponse);
                             JSONObject LuanvanObject = jsonArray.getJSONObject(i);
@@ -222,7 +228,7 @@ public class ConnectServer {
                     public void onErrorResponse(VolleyError volleyError) {
 
                         // Hiding the progress dialog after all task complete.
-                        dialog.dismiss();
+
                         // Showing error message if something goes wrong.
                         Toast.makeText(context, volleyError.toString(), Toast.LENGTH_LONG).show();
                     }
@@ -234,7 +240,6 @@ public class ConnectServer {
     }
     //Get Luanvan data
     public void Get_LuanvanFromServer (Context context, Traluanvandb database) {
-        dialog = ProgressDialog.show(context, "", "Please wait...", true);
         List<LuanvanModel> Luanvan = new ArrayList<>();
         String serverAPIURL = "https://traluanvan.herokuapp.com/android/select-data-luanvan.php";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, serverAPIURL,
@@ -242,10 +247,8 @@ public class ConnectServer {
                     @Override
                     public void onResponse(String ServerResponse) {
                         try {
-                            dialog.dismiss();
                             //Set Json obj when have more object
                             //JSONObject obj = new JSONObject(ServerResponse);
-
                             //so here we are getting that json array
                             JSONArray jsonArray = new JSONArray(ServerResponse);
                             for (int i = 0; i < jsonArray.length(); i++) {
@@ -264,13 +267,12 @@ public class ConnectServer {
                                     database.InsertData(LV_Ma, LV_Ten, LV_TenTiengAnh, SV1_Ten, MSSV1, SV2_Ten, MSSV2, GV1_Ten, GV2_Ten);
                                 }
                                 catch (Exception e) {
-                                    dialog.dismiss();
+
                                     Toast.makeText(context,e.toString(),Toast.LENGTH_SHORT).show();
                                 }
                                 LuanvanModel newview = new LuanvanModel(LV_Ma, LV_Ten, LV_TenTiengAnh, SV1_Ten, MSSV1, SV2_Ten, MSSV2, GV1_Ten, GV2_Ten);
                                 Luanvan.add(newview);
                             }
-
                         } catch (JSONException e) {
                             Toast.makeText(context,e.toString(),Toast.LENGTH_SHORT).show();
                         }
@@ -281,7 +283,7 @@ public class ConnectServer {
                     public void onErrorResponse(VolleyError volleyError) {
 
                         // Hiding the progress dialog after all task complete.
-                        dialog.dismiss();
+
                         Copy_Database_local(context,database);
 
                         // Showing error message if something goes wrong.
@@ -293,6 +295,7 @@ public class ConnectServer {
         // Adding the StringRequest object into requestQueue.
         requestQueue.add(stringRequest);
     }
+
  public void Copy_Database_local(Context mcontext, Traluanvandb data){
              File database = mcontext.getApplicationContext().getDatabasePath(data.DB_NAME);
         if (false == database.exists()) {

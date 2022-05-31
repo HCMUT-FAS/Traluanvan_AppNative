@@ -17,6 +17,7 @@ import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.khud.traluanvan.Server.ServerModel;
 import com.khud.traluanvan.databinding.FragmentDateBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -35,7 +36,7 @@ public class DateFragment extends Fragment {
     Context mcontext;
     FragmentDateBinding DateBinding;
     String Ngay,LV_Ma;
-    ConnectServer connectServer;
+    ServerModel connectServer;
     String Key="Input";
     ArrayList<String> Input=new ArrayList<String>();
 
@@ -85,7 +86,7 @@ public class DateFragment extends Fragment {
         //Set layout
         submit=DateBinding.submit;
         //Set ConnectServer
-        connectServer=new ConnectServer();
+//        connectServer=new ServerModel();
         return view;
     }
     @Override

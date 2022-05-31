@@ -15,7 +15,8 @@
         android:queryHint="Tra luận văn"
         android:iconifiedByDefault="false"
         android:queryBackground="@android:color/transparent"
-        android:background="@drawable/searchview_background">
+        android:background="@drawable/searchview_background"
+        >
 
     </SearchView>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

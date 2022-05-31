@@ -2,7 +2,7 @@
     <string name="app_name">Tra luận văn</string>
     <string name="title_activity_main">Search</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="data_fragment_label">Data</string>
+    <string name="data_fragment_label">Date</string>
     <string name="menu_fragment_label">Menu</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
